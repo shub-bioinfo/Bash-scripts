@@ -1,0 +1,134 @@
+#!/bin/bash
+#case menu
+
+clear
+#1. FOR PDF CMPRESSION 
+pdfcompress()
+{
+  echo -e "\n** For Compressing the PDF size. Convert into .ps then again into .pdf format.**"
+  echo -e "\nps2pdf input.pdf output.ps  \n"
+  echo -e "ps2pdf -dPDFSETTINGS=/ebook output.ps output.pdf  \n"
+}
+
+#2. AVERAGE STRUCTURE
+Compresspdf()
+{
+  echo -e "\n gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=output.pdf phd-all.pdf\n"
+  echo -e "\n screen  72  DPI\n"
+  echo -e "\n ebook   150 DPI\n"
+  echo -e "\n printer 300 DPI\n"
+}
+
+#3. TO CREATE THE INDEX FILE
+make_ndx()
+{
+  echo -e "\nFor making the index file in gromacs.\n"
+  echo -e " gmx make_ndx -f mdrun.gro -o index.ndx  \n"
+}
+
+#4. TO RENDER IMAGE THROUGH TACHYON
+tachyon_image()
+{
+  echo -e "\nThis is the script for increasing resolution of images through tachyon.   \n "
+cat > figure.sh <<EOF
+#!/bin/bash
+#replace the line to increase the Resolution in DAT file created by VMD
+var=\$(awk 'NR==11 {print \$1, \$2*2, \$3*2 }' vmdscene.dat)
+sed -i "11s/.*/\$var/" vmdscene.dat
+#Run VMD command to convert DAT file to an TGA format image file
+/usr/local/lib/vmd/tachyon_LINUXAMD64 -aasamples 12 vmdscene.dat -format TARGA -o vmdscene.tga
+#convert TGA image to JPEG format from gimp command line
+mogrify -format jpeg vmdscene.tga
+EOF
+chmod +x figure.sh
+}
+
+#5. TO GET THE LIGPLUS DEFINED H-BONDS
+ligplus()
+{
+echo -e "HHB...RRR.C.NNNNI.AAAA.....RRR.C.NNNNI.AAAA....DDDD"
+echo -e "HHB   HIS A  231   N       ASP A  226   OD2    2.77"
+echo -e "HHB   HIS A  231   ND1     ASP A  226   OD1    2.76"
+echo -e "HHB   HIS A  231   NE2     THR A 1317   O      2.80"
+echo -e "HHB   THR A 1317   N       ALA A  113   O      2.72"
+echo -e "HHB   ALA A  113   N       PHQ A  317   O2     3.31"
+}
+
+#6. TO CONVERT PS/EPS IMAGE INTO JPEG/PNG
+ps_jpeg()
+{
+  echo -e "TO CONVERT PS/EPS IMAGE INTO JPEG/PNG"
+  echo -e "gs -sDEVICE=jpeg -dJPEGQ=100 -dNOPAUSE -dBATCH -dSAFER -r300 -sOutputFile=output.jpg input.eps\n"
+}
+
+#7. TO MAKE MOVIE IN VMDEXTEND THE MD SIMULATION
+vmd_movie()
+{ 
+  echo -e "\nThis is the script to create VMD movie.\n"  
+  echo -e "Extension -->  Visualisation"
+  echo -e "Renderer  -->  Tachyon --> Movie Maker"
+  echo -e "Movie Settings -->  Trajectory --> Tick Off/Delete Image files"
+  echo -e "Format -->  Taraga Frames"
+  echo -e "\n    <----To IMPROVE RESOLUTION----->   "
+  echo -e "\ntachyon -aasamples 12 *.dat -format TARGA -res 1012*1012  -o *.tga"
+  echo -e "\n    <-----Convert to GIF----------->   "
+  echo -e "\nconvert -delay 2 -loop 0  *.tga  movie.gif   "
+  echo -e "\n    <-----To RESIZE GIF ----------->   "
+  echo -e "\nconvert -resize 20%  -delay 2 -loop 0  *.tga  movie.gif   "
+  echo -e "\nconvert -resize 786x565  -delay 2 -loop 0  *.tga  movie.gif   "
+}
+
+#8. AMBER TO GROMACS PARMED SCRIPT
+amb-to-gro()
+{
+  echo -e "\nIt will generate amb-to-gro.py script to convert in gromacs format."
+
+cat > amb-to-gro.py <<EOF
+import parmed as pmd
+a=input("Enter the prmtop file > ")
+b=input("Enter the inpcrd file > ")
+
+amber = pmd.load_file(a, b)
+# Save a GROMACS topology and GRO file
+amber.save('gromacs5.top')
+amber.save('gromacs5.gro')
+EOF
+}
+
+while true ;
+do
+echo -e "
+Please select:
+
+\033[0;105;30m
+1. PDF Compress     2. Compress PDF GS  3. Make_ndx         4. VMD_IMAGE        
+5. LigPlus          6. PS-to-JPEG       7. VMD_MOVIE        8. Amber-to-Gromacs 
+0. EXIT             
+\033[0m"
+
+echo "Enter selection [1-7] 0 for EXIT:"
+read xyz
+
+#echo $xyz
+case $xyz in
+    1)   pdfcompress 
+         ;;
+    2)   Compresspdf
+         ;;
+    3)   make_ndx
+         ;;
+    4)   tachyon_image
+         ;;
+    5)   ligplus 
+         ;;
+    6)   ps_jpeg 
+         ;;
+    7)   vmd_movie
+         ;;
+    8)   amb-to-gro 
+         ;;
+    *)   echo "EXIT" >&2
+         exit 
+         ;;
+esac
+done
