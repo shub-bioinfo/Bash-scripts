@@ -38,6 +38,7 @@ sed -i "11s/.*/\$var/" vmdscene.dat
 #Run VMD command to convert DAT file to an TGA format image file
 /usr/local/lib/vmd/tachyon_LINUXAMD64 -aasamples 12 vmdscene.dat -format TARGA -o vmdscene.tga
 #convert TGA image to JPEG format from gimp command line
+#Install Imagemagick to get mogrify working
 mogrify -format jpeg vmdscene.tga
 EOF
 chmod +x figure.sh
