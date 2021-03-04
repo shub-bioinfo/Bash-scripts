@@ -1,0 +1,26 @@
+
+f(x) =  x > 0 ? x : 0
+g(x)=f(x) > 0 ? 1 : 0
+
+
+
+plot f(x) lw 3 lc rgbcolor "red"   title "f(x) = max(x ,0)",\
+     g(x) lw 3 lc rgbcolor "blue"  title "g(x) = if x >0: 1 else 0 "
+
+#set xlabel "x" font "Helvetica, 28" offset 0,0.5
+#set ylabel "f(x), g(x)" font "Helvetica, 28" offset 1,0
+
+set xrange [-2:2]
+set yrange [0:2]
+
+set xtics font "Helvetica, 28"
+set ytics 0,0.5,1 font "Helvetica, 28" 
+
+set key left top font "Helvetica, 28"
+set title "Rectified Linear Unit" font "Helvetica, 32" offset 0,-0.5
+
+set terminal  pngcairo size 1024,720 enhanced color font 'Helvetica, 32'
+#set terminal  postscript eps  enhanced color font 'Arial,14'
+set output "relu.png"
+replot
+
