@@ -1,0 +1,26 @@
+
+f(x) =1/(1+exp(-x))
+g(x)=f(x)*(1-f(x))
+
+
+
+plot f(x) lw 3 lc rgbcolor "red"   title "f(x) = 1/(1+(exp(-x)))",\
+     g(x) lw 3 lc rgbcolor "blue"  title "g(x) = f(x)*(1 - f(x))"
+
+#set xlabel "x" font "Helvetica, 28" offset 0,0.5
+#set ylabel "f(x), g(x)" font "Helvetica, 28" offset 1,0
+
+set xrange [-5:5]
+set yrange [0:1.5]
+
+set xtics font "Helvetica, 28"
+set ytics 0,0.5,1 font "Helvetica, 28"
+
+set key left top font "Helvetica, 28"
+set title "Sigmoid Function" font "Helvetica, 32" offset 0,-0.5
+
+set terminal  pngcairo size 1024,720 enhanced color font 'Helvetica, 32'
+#set terminal  postscript eps  enhanced color font 'Arial,14'
+set output "sigmoid.png"
+replot
+
