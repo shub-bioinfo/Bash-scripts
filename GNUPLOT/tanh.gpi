@@ -1,0 +1,23 @@
+
+f(x) = (exp(x) - exp(-x))/(exp(x) + exp(-x))
+g(x)=(1-f(x)**2)
+
+
+
+plot f(x) lw 3 lc rgbcolor "red"   title "f(x) = (exp(x) - exp(-x))/(exp(x) + exp(-x))",\
+     g(x) lw 3 lc rgbcolor "blue"  title "g(x)=(1-f(x)**2)"
+
+set xrange [-5:5]
+set yrange [-1:2]
+
+set xtics font "Helvetica, 28"
+set ytics -1,1,1 font "Helvetica, 28"
+
+set key font "Helvetica, 28"
+set title "Hyperbolic Tangent" font "Helvetica, 32" offset 0,-0.5
+
+set terminal  pngcairo size 1024,720 enhanced color font 'Helvetica,32'
+#set terminal  postscript eps  enhanced color font 'Arial,14'
+set output "tanh.png"
+replot
+
