@@ -1,0 +1,4 @@
+#This is the file for some important commands of SED
+#To remove 2-3 lines after a pattern
+
+sed '/pattern/{n;N;N;d}' file.txt
