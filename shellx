@@ -33,11 +33,11 @@ IF-OR()
  
 }
 
-#3. TO CREATE THE INDEX FILE
-make_ndx()
+#3. TO CREATE THE WHILE LOOP WITH READING FILE
+while_read()
 {
-  echo -e "\nFor making the index file in gromacs.\n"
-  echo -e " gmx make_ndx -f mdrun.gro -o index.ndx  \n"
+  echo -e "#-------------------------------------------------#"
+  echo -e "\n while read i ; do echo \$i; done <file_name \n"
 }
 
 #4. TO RENDER IMAGE THROUGH TACHYON
@@ -129,7 +129,7 @@ case $xyz in
          ;;
     2)   IF-OR
          ;;
-    3)   make_ndx
+    3)   while_read
          ;;
     4)   tachyon_image
          ;;
