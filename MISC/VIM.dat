@@ -1,0 +1,6 @@
+#Command to used the vim in the terminal mode
+
+vim -e - $file <<@@@
+1,/11/. -3, .d
+wq
+@@@
