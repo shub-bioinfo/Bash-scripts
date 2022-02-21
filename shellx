@@ -40,6 +40,14 @@ while_read()
   echo -e "\n while read i ; do echo \$i; done <file_name \n"
 }
 
+#4. TO DEFINE VARIABLE IN BASH SCRIPT
+bash_var()
+{
+  echo -e "\nDefining variable with mathematical expression"
+  echo -e "var=`echo 1-$i | bc `  \n"
+}
+
+
 #4. TO RENDER IMAGE THROUGH TACHYON
 tachyon_image()
 {
@@ -131,7 +139,7 @@ case $xyz in
          ;;
     3)   while_read
          ;;
-    4)   tachyon_image
+    4)   bash_var
          ;;
     5)   ligplus 
          ;;
