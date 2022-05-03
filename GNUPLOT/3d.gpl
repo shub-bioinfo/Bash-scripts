@@ -1,0 +1,4 @@
+#To make spline in the 3D data with number of points in xdim, ydim
+#set dgrid3d xdim,ydim splines
+
+set dgrid3d 80,60 splines
