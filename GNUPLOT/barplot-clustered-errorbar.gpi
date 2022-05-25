@@ -1,0 +1,8 @@
+#This is the script to create clustered bar plot with error bars
+
+set style data histogram
+set style histogram cluster gap 1 errorbars
+set style fill solid
+
+plot "energyAll-ApoA1-Coul.dat" us 2:4:xtic(1), "energyAll-ApoA2-Coul.dat" us 2:4:xtic(1)
+
