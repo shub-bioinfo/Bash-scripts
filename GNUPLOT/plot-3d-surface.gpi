@@ -1,0 +1,37 @@
+#This is the script to create 3D contour plots for the FES
+set terminal postscript eps enhanced color  font 'Helvetica,25'
+#set terminal  pngcairo size 1024,720 enhanced color font 'Arial, 24'
+set output 'free_energy_pc12.eps'
+set view map
+
+set xrange [-14:26]
+set yrange [-14:10]
+
+set encoding iso_8859_1
+set xlabel "PC 1" font 'Helvetica,28' offset 0.5,0.5
+set ylabel "PC 2" rotate parallel font 'Helvetica,28' offset 1.5,0
+
+set xtics -10,5,20 nomirror font ', 20' offset 0,0.50
+set ytics -10,5,10 nomirror font ', 20' offset 1,0
+#set ytics  offset 58.5,0
+
+set size 1,1
+
+set palette  defined  (0 "#000fff",  2 "#0090ff",  4 "#9fffee", 6 "#90ff70",  8 "#ffee00",  10 "#ffc0c0", 12 "#ff7000")
+
+set colorbox vertical user origin 0.89,0.205 size 0.03,0.645
+set cbtics font ', 20' offset -1,0
+
+unset clabel
+unset key
+
+#set cntrparam bspline
+set contour both
+set zrange [0:18]
+set cntrp lev incr 0,2,12
+set dgrid3d 120,80 splines
+
+set linetype 1 lc rgb 'black'
+unset border
+
+splot "gibbs-Apo-rep0.txt" us 1:2:($3+0.5) lw 1.0 with pm3d
